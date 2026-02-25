@@ -1,0 +1,39 @@
+# gandhinagar_weather_analysis.py
+
+import csv
+from statistics import mean, median
+
+def load_weather_data(filename):
+    temperatures = []
+    humidities = []
+
+    with open(filename, mode='r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            temperatures.append(float(row['temperature']))
+            humidities.append(float(row['humidity']))
+
+    return temperatures, humidities
+
+def calculate_stats(data_list):
+    avg = mean(data_list)
+    med = median(data_list)
+    return avg, med
+
+def main():
+    file_name = "gandhinagar_weather.csv"
+
+    temperatures, humidities = load_weather_data(file_name)
+
+    avg_temp, median_temp = calculate_stats(temperatures)
+    avg_humidity, median_humidity = calculate_stats(humidities)
+
+    print("Gandhinagar Weather Analysis (Last 10 Days)")
+    print("------------------------------------------")
+    print(f"Average Temperature: {avg_temp:.2f} °C")
+    print(f"Median Temperature: {median_temp:.2f} °C")
+    print(f"Average Humidity: {avg_humidity:.2f} %")
+    print(f"Median Humidity: {median_humidity:.2f} %")
+
+if __name__ == "__main__":
+    main()
